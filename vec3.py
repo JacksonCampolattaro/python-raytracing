@@ -27,3 +27,6 @@ class Vec3(numpy.ndarray):
 
     def dist(self, other):
         return numpy.linalg.norm(self - other)
+
+    def __str__(self):
+        return "({}, {}, {})".format(self.x, self.y, self.z)
