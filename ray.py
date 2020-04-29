@@ -11,7 +11,8 @@ pixels = img.load()
 for y in range(img.size[0]):
     print("Rendering column ", y, end="\r")
     for x in range(img.size[1]):
-        pixels[y, x] = (y, x, 100)
+        color = Vec3([x / imageWidth, y / imageHeight, 0.2])
+        pixels[y, x] = tuple(color)
 
 
 img.show()

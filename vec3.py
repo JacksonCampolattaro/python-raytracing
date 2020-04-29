@@ -19,14 +19,18 @@ class Vec3(numpy.ndarray):
     def z(self):
         return self[2]
 
+    def dist(self, other):
+        return numpy.linalg.norm(self - other)
+
     def __eq__(self, other):
         return numpy.array_equal(self, other)
 
     def __ne__(self, other):
         return not numpy.array_equal(self, other)
 
-    def dist(self, other):
-        return numpy.linalg.norm(self - other)
-
     def __str__(self):
         return "({}, {}, {})".format(self.x, self.y, self.z)
+
+    def __iter__(self):
+        for x in numpy.nditer(self):
+            yield x.item()
