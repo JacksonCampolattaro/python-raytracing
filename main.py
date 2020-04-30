@@ -2,6 +2,7 @@ from PIL import Image
 from vec3 import Vec3
 from color import Color
 from ray import Ray
+import math
 
 
 def hit_sphere(center, radius, ray):
@@ -10,14 +11,21 @@ def hit_sphere(center, radius, ray):
     a = ray.direction.dot(ray.direction)
     b = 2.0 * oc.dot(ray.direction)
     c = oc.dot(oc) - radius * radius
-    discriminant = b*b - 4.0*a*c
-    return (discriminant > 0)
+    discriminant = b * b - 4.0 * a * c
+
+    if discriminant < 0:
+        return -1.0
+
+    return (-b - math.sqrt(discriminant)) / (2.0 * a)
 
 
 def ray_color(ray):
 
-    if hit_sphere(Vec3([0, 0, -1]), 0.5, ray):
-        return Color([1, 0, 0])
+    t = hit_sphere(Vec3([0, 0, -1]), 0.5, ray)
+
+    if t > 0.0:
+        N = (ray.at(t) - Vec3([0, 0, -1])).norm()
+        return Color(0.5 * (N + [1, 1, 1]))
 
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
