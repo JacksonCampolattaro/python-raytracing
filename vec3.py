@@ -54,8 +54,16 @@ class Vec3(numpy.ndarray):
             yield x.item()
 
 
+def random_in_hemisphere(normal):
+    in_unit_sphere = random_in_unit_sphere()
+    if in_unit_sphere.dot(normal):
+        return in_unit_sphere
+    else:
+        return -in_unit_sphere
+
+
 def random_in_unit_sphere():
-    a = random.uniform(0, 2 * math.pi)
-    z = random.uniform(-1.0, 1.0)
-    r = math.sqrt(1 - z * z)
-    return Vec3([r * math.cos(a), r * math.sin(a), z])
+    while True:
+        p = Vec3().random(-1.0, 1.0)
+        if p.length() <= 1:
+            return p

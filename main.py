@@ -1,4 +1,4 @@
-from vec3 import Vec3, random_in_unit_sphere
+from vec3 import Vec3, random_in_hemisphere
 from color import Color
 from ray import Ray
 from hittable import Hittable, HittableList
@@ -20,7 +20,7 @@ def ray_color(ray, world, depth=0):
     hit, rec = world.hit(ray, 0.1, 1000)
 
     if hit:
-        target = rec.position + rec.normal + random_in_unit_sphere()
+        target = rec.position + random_in_hemisphere(rec.normal)
         return 0.5 * ray_color(
             Ray(rec.position, target - rec.position), world, depth - 1
         )
