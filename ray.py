@@ -1,7 +1,7 @@
 from vec3 import Vec3
 
 
-class Ray:
+class Ray(object):
 
     origin = Vec3([0, 0, 0])
     direction = Vec3([0, 0, 0])
