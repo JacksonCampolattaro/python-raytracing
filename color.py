@@ -8,7 +8,7 @@ def clamp(value, minimum, maximum):
 
 
 class Color(numpy.ndarray):
-    def __new__(cls, input_array=(0, 0, 0)):
+    def __new__(cls, input_array=(0.0, 0.0, 0.0)):
         obj = numpy.asarray(input_array).view(cls)
         return obj
 

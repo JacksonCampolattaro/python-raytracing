@@ -25,7 +25,7 @@ def ray_color(ray, world):
 
 image_height = 100
 image_width = 200
-samples_per_pixel = 100
+samples_per_pixel = 10
 
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
@@ -36,20 +36,21 @@ world = HittableList()
 world.objects.append(Sphere([0, 0, -1], 0.5))
 world.objects.append(Sphere([0, -100.5, -1], 100))
 
-lower_left_corner = Vec3([-2.0, -1.0, -1.0])
-horizontal = Vec3([4.0, 0.0, 0.0])
-vertical = Vec3([0.0, 2.0, 0.0])
-origin = Vec3([0.0, 0.0, 0.0])
-
 for j in range(image_height - 1):
     for i in range(image_width - 1):
 
-        u = i / image_width
-        v = j / image_height
+        color = Color([0.0, 0.0, 0.0])
 
-        r = camera.getRay(u, v)
+        for _ in range(samples_per_pixel):
 
-        color = ray_color(r, world)
+            u = (i + random.random()) / image_width
+            v = (j + random.random()) / image_height
+
+            ray = camera.getRay(u, v)
+
+            color += ray_color(ray, world)
+
+        color /= samples_per_pixel
         pixels[i, image_height - j - 1] = tuple(color)
 
     print("{} / {}".format(j + 1, image_height), end="\r")
