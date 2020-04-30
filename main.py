@@ -4,6 +4,7 @@ from ray import Ray
 from hittable import Hittable, HittableList
 from sphere import Sphere
 from camera import Camera
+from material import Material
 
 from PIL import Image
 import random
@@ -41,8 +42,8 @@ pixels = img.load()
 camera = Camera()
 
 world = HittableList()
-world.objects.append(Sphere([0, 0, -1], 0.5))
-world.objects.append(Sphere([0, -100.5, -1], 100))
+world.objects.append(Sphere([0, 0, -1], 0.5, Material()))
+world.objects.append(Sphere([0, -100.5, -1], 100, Material()))
 
 
 def sample(j, i):

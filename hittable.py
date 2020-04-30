@@ -2,11 +2,13 @@ from vec3 import Vec3
 
 
 class HitRecord(object):
+    def __init__(self):
 
-    position = Vec3()
-    normal = Vec3()
-    t = 0.0
-    frontFacing = False
+        self.position = Vec3()
+        self.normal = Vec3()
+
+        self.t = 0.0
+        self.frontFacing = False
 
     def setFaceNormal(self, ray, outwardNormal):
         self.frontFacing = ray.direction.dot(outwardNormal) < 0
