@@ -19,3 +19,24 @@ class HitRecord(object):
 class Hittable(object):
     def hit(self, ray, t_min, t_max):
         raise NotImplementedError()
+
+
+class HittableList(Hittable):
+
+    objects = []
+
+    def hit(self, ray, t_min, t_max):
+
+        hitAnything = False
+        t_closest = t_max
+
+        for object in self.objects:
+
+            hit, tempRec = object.hit(ray, t_min, t_closest)
+
+            if hit:
+                hitAnything = True
+                t_closest = tempRec.t
+                rec = tempRec
+
+        return hitAnything, rec

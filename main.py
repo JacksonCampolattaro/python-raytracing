@@ -9,13 +9,13 @@ import math
 
 def ray_color(ray):
 
-    sphere = Sphere(Vec3([0, 0, -1]), 0.5)
+    sphere = Sphere([0, 0, -1], 0.5)
 
     hit, rec = sphere.hit(ray, 0.1, 1000)
 
     t = rec.t
 
-    if t > 0.0:
+    if hit:
         N = (ray.at(t) - Vec3([0, 0, -1])).norm()
         return Color(0.5 * (N + [1, 1, 1]))
 
@@ -23,6 +23,8 @@ def ray_color(ray):
     t = 0.5 * (unit_direction.y + 1.0)
     return ((1.0 - t) * Color([1.0, 1.0, 1.0])) + (t * Color([0.5, 0.7, 1.0]))
 
+
+hittableList = [Sphere([0, 0, -1], 0.5), Sphere([1, 0, -1], 0.3)]
 
 image_height = 100
 image_width = 200
