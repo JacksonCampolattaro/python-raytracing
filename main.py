@@ -4,7 +4,7 @@ from ray import Ray
 from hittable import Hittable, HittableList
 from sphere import Sphere
 from camera import Camera
-from material import Material, Lambertian, Metal
+from material import Material, Lambertian, Metal, Dialectric
 
 from PIL import Image
 import random
@@ -47,13 +47,14 @@ max_depth = 20
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
 
-camera = Camera()
+camera = Camera(90, image_width / image_height)
 
 world = HittableList()
+
 world.objects.append(Sphere([0, 0, -1], 0.5, Lambertian(Vec3([0.7, 0.3, 0.3]))))
 world.objects.append(Sphere([0, -100.5, -1], 100, Lambertian(Vec3([0.8, 0.8, 0.0]))))
 world.objects.append(Sphere([-1.1, 0, -1], 0.5, Metal(Vec3([0.8, 0.8, 0.8]), 0.1)))
-world.objects.append(Sphere([1.1, 0, -1], 0.5, Metal(Vec3([0.2, 0.8, 0.2]), 1.0)))
+world.objects.append(Sphere([1.1, 0, -1], 0.5, Dialectric(1.5)))
 
 
 def sample(j, i):

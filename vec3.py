@@ -78,3 +78,12 @@ def random_in_hemisphere(normal):
 
 def reflect(vector, normal):
     return vector - 2 * vector.dot(normal) * normal
+
+
+def refract(vector, normal, etai_over_etat):
+    cos_theta = normal.dot(-vector)
+    r_out_parallel = etai_over_etat * (vector + cos_theta * normal)
+    r_out_perpendicular = (
+        -math.sqrt(1.0 - r_out_parallel.length() * r_out_parallel.length()) * normal
+    )
+    return r_out_parallel + r_out_perpendicular
