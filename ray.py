@@ -1,19 +1,14 @@
-from PIL import Image
 from vec3 import Vec3
-from color import Color
 
 
-imageHeight = 250
-imageWidth = 250
+class Ray:
 
-img = Image.new("RGB", (imageHeight, imageWidth), "black")
-pixels = img.load()
+    origin = Vec3([0, 0, 0])
+    direction = Vec3([0, 0, 0])
 
-for y in range(img.size[0]):
-    # print("Rendering column ", y, end="\r")
-    for x in range(img.size[1]):
-        color = Color([x / imageWidth, y / imageHeight, 0.2])
-        pixels[y, x] = tuple(color)
+    def __init__(self, origin, direction):
+        self.origin = origin
+        self.direction = direction
 
-
-img.show()
+    def at(self, t):
+        return origin + t * direction

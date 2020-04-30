@@ -1,8 +1,8 @@
 
-all: lint ray
+all: lint run
 
-ray: ray.py vec3.py
-	python3.7 ray.py
+run: main.py vec3.py color.py ray.py
+	python3.7 main.py
 
-lint: ray.py
-	black vec3.py ray.py
+lint: main.py vec3.py color.py ray.py
+	black main.py vec3.py color.py ray.py
