@@ -1,4 +1,4 @@
-from vec3 import Vec3
+from vec3 import Vec3, random_in_unit_sphere
 from color import Color
 from ray import Ray
 from hittable import Hittable, HittableList
@@ -12,14 +12,18 @@ from functools import partial
 from multiprocessing import Pool
 
 
-def ray_color(ray, world):
+def ray_color(ray, world, depth=0):
+
+    if depth <= 0:
+        return Color([0.0, 0.0, 0.0])
 
     hit, rec = world.hit(ray, 0.1, 1000)
 
-    t = rec.t
-
     if hit:
-        return 0.5 * (Color([1, 1, 1]) + rec.normal)
+        target = rec.position + rec.normal + random_in_unit_sphere()
+        return 0.5 * ray_color(
+            Ray(rec.position, target - rec.position), world, depth - 1
+        )
 
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
@@ -28,7 +32,8 @@ def ray_color(ray, world):
 
 image_height = 100
 image_width = 200
-samples_per_pixel = 10
+samples_per_pixel = 100
+max_depth = 50
 
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
@@ -40,18 +45,24 @@ world.objects.append(Sphere([0, 0, -1], 0.5))
 world.objects.append(Sphere([0, -100.5, -1], 100))
 
 
+def sample(j, i):
+
+    u = (i + random.random()) / image_width
+    v = (j + random.random()) / image_height
+
+    ray = camera.getRay(u, v)
+
+    return ray_color(ray, world, max_depth)
+
+
 def drawPixel(j, i):
 
     color = Color([0.0, 0.0, 0.0])
 
+    # with Pool() as pool:
     for _ in range(samples_per_pixel):
 
-        u = (i + random.random()) / image_width
-        v = (j + random.random()) / image_height
-
-        ray = camera.getRay(u, v)
-
-        color += ray_color(ray, world)
+        color += sample(j, i)
 
     color /= samples_per_pixel
     # pixels[i, image_height - j - 1] = tuple(color)

@@ -1,4 +1,5 @@
 import numpy
+import random
 
 
 # A simple 3d vector class
@@ -28,6 +29,16 @@ class Vec3(numpy.ndarray):
     def norm(self):
         return self / numpy.linalg.norm(self)
 
+    def random(self, minimum, maximum):
+        self = Vec3(
+            [
+                random.uniform(minimum, maximum),
+                random.uniform(minimum, maximum),
+                random.uniform(minimum, maximum),
+            ]
+        )
+        return self
+
     def __eq__(self, other):
         return numpy.array_equal(self, other)
 
@@ -40,3 +51,10 @@ class Vec3(numpy.ndarray):
     def __iter__(self):
         for x in numpy.nditer(self):
             yield x.item()
+
+
+def random_in_unit_sphere():
+    while True:
+        p = Vec3().random(-1.0, 1.0)
+        if p.length() <= 1:
+            return p
