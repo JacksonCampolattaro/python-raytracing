@@ -1,10 +1,9 @@
-from vec3 import Vec3, random_in_hemisphere
+from vec3 import Vec3
 from color import Color
-from ray import Ray
-from hittable import Hittable, HittableList
+from hittable import HittableList
 from sphere import Sphere
 from camera import Camera
-from material import Material, Lambertian, Metal, Dialectric
+from material import Lambertian, Metal, Dialectric
 
 from PIL import Image
 import random
@@ -29,11 +28,6 @@ def ray_color(ray, world, depth=0):
 
         return Vec3([0.0, 0.0, 0.0])
 
-        # target = rec.position + random_in_hemisphere(rec.normal)
-        # return 0.5 * ray_color(
-        # Ray(rec.position, target - rec.position), world, depth - 1
-        # )
-
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
     return ((1.0 - t) * Color([1.0, 1.0, 1.0])) + (t * Color([0.5, 0.7, 1.0]))
@@ -41,13 +35,19 @@ def ray_color(ray, world, depth=0):
 
 image_height = 100
 image_width = 200
-samples_per_pixel = 10
-max_depth = 20
+samples_per_pixel = 4
+max_depth = 10
 
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
 
-camera = Camera(90, image_width / image_height)
+camera = Camera(
+    Vec3([2.0, 2.0, 1.0]),
+    Vec3([0.0, 0.0, -1.0]),
+    Vec3([0.0, 1.0, 0.0]),
+    70,
+    image_width / image_height,
+)
 
 world = HittableList()
 

@@ -4,6 +4,8 @@ from ray import Ray
 import random
 import math
 
+from numba import jit
+
 
 class Material(object):
     def scatter(self, ray_in, rec):
@@ -67,6 +69,7 @@ class Dialectric(Material):
         return True, scattered, attenuation
 
 
+@jit
 def schlick(cosine, refractive_index):
     r0 = (1 - refractive_index) / (1 + refractive_index)
     r0 = r0 * r0
