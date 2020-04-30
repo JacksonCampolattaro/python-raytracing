@@ -7,23 +7,13 @@ from sphere import Sphere
 import math
 
 
-def hit_sphere(center, radius, ray):
-
-    oc = ray.origin - center
-    a = ray.direction.dot(ray.direction)
-    b = 2.0 * oc.dot(ray.direction)
-    c = oc.dot(oc) - radius * radius
-    discriminant = b * b - 4.0 * a * c
-
-    if discriminant < 0:
-        return -1.0
-
-    return (-b - math.sqrt(discriminant)) / (2.0 * a)
-
-
 def ray_color(ray):
 
-    t = hit_sphere(Vec3([0, 0, -1]), 0.5, ray)
+    sphere = Sphere(Vec3([0, 0, -1]), 0.5)
+
+    hit, rec = sphere.hit(ray, 0.1, 1000)
+
+    t = rec.t
 
     if t > 0.0:
         N = (ray.at(t) - Vec3([0, 0, -1])).norm()
