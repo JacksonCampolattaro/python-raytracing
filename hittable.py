@@ -29,6 +29,7 @@ class HittableList(Hittable):
 
         hitAnything = False
         t_closest = t_max
+        rec = HitRecord()
 
         for object in self.objects:
 

@@ -2,29 +2,27 @@ from PIL import Image
 from vec3 import Vec3
 from color import Color
 from ray import Ray
-from hittable import Hittable
+from hittable import Hittable, HittableList
 from sphere import Sphere
-import math
 
 
-def ray_color(ray):
+def ray_color(ray, world):
 
-    sphere = Sphere([0, 0, -1], 0.5)
-
-    hit, rec = sphere.hit(ray, 0.1, 1000)
+    hit, rec = world.hit(ray, 0.1, 1000)
 
     t = rec.t
 
     if hit:
-        N = (ray.at(t) - Vec3([0, 0, -1])).norm()
-        return Color(0.5 * (N + [1, 1, 1]))
+        return 0.5 * (Color([1, 1, 1]) + rec.normal)
 
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
     return ((1.0 - t) * Color([1.0, 1.0, 1.0])) + (t * Color([0.5, 0.7, 1.0]))
 
 
-hittableList = [Sphere([0, 0, -1], 0.5), Sphere([1, 0, -1], 0.3)]
+world = HittableList()
+world.objects.append(Sphere([0, 0, -1], 0.5))
+world.objects.append(Sphere([0, -100.5, -1], 100))
 
 image_height = 100
 image_width = 200
@@ -45,7 +43,7 @@ for j in range(image_height - 1):
 
         r = Ray(origin, lower_left_corner + u * horizontal + v * vertical)
 
-        color = ray_color(r)
+        color = ray_color(r, world)
         pixels[i, image_height - j - 1] = tuple(color)
 
     print("{} / {}".format(j + 1, image_height), end="\r")
