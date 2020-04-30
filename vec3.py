@@ -1,5 +1,6 @@
 import numpy
 import random
+import math
 
 
 # A simple 3d vector class
@@ -54,7 +55,7 @@ class Vec3(numpy.ndarray):
 
 
 def random_in_unit_sphere():
-    while True:
-        p = Vec3().random(-1.0, 1.0)
-        if p.length() <= 1:
-            return p
+    a = random.uniform(0, 2 * math.pi)
+    z = random.uniform(-1.0, 1.0)
+    r = math.sqrt(1 - z * z)
+    return Vec3([r * math.cos(a), r * math.sin(a), z])

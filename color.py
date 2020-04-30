@@ -1,4 +1,5 @@
 import numpy
+import math
 
 
 def clamp(value, minimum, maximum):
@@ -26,4 +27,4 @@ class Color(numpy.ndarray):
 
     def __iter__(self):
         for x in numpy.nditer(self):
-            yield int(255 * clamp(x.item(), 0, 0.999))
+            yield int(255 * clamp(math.sqrt(x.item()), 0, 0.999))

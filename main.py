@@ -32,7 +32,7 @@ def ray_color(ray, world, depth=0):
 
 image_height = 100
 image_width = 200
-samples_per_pixel = 100
+samples_per_pixel = 10
 max_depth = 50
 
 img = Image.new("RGB", (image_width, image_height), "black")
