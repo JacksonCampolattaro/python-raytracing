@@ -23,7 +23,7 @@ class Vec3(numpy.ndarray):
         return numpy.linalg.norm(self - other)
 
     def norm(self):
-        return self / linalg.norm(self)
+        return self / numpy.linalg.norm(self)
 
     def __eq__(self, other):
         return numpy.array_equal(self, other)
