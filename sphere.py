@@ -1,13 +1,9 @@
 from hittable import Hittable, HitRecord
-from vec3 import Vec3
+from vec3 import Vec3, dot
 import math
 
 
 class Sphere(Hittable):
-
-    center = Vec3()
-    radius = 1.0
-
     def __init__(self, center, radius, material):
 
         self.center = center
@@ -17,9 +13,9 @@ class Sphere(Hittable):
     def hit(self, ray, t_min, t_max):
 
         oc = ray.origin - self.center
-        a = ray.direction.length() * ray.direction.length()
-        half_b = oc.dot(ray.direction)
-        c = (oc.length() * oc.length()) - (self.radius * self.radius)
+        a = ray.direction.length_squared()
+        half_b = dot(oc, ray.direction)
+        c = oc.length_squared() - (self.radius * self.radius)
         discriminant = (half_b * half_b) - (a * c)
 
         if discriminant > 0:

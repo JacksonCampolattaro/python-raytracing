@@ -4,54 +4,97 @@ import math
 
 
 # A simple 3d vector class
-class Vec3(numpy.ndarray):
-    def __new__(cls, input_array=(0, 0, 0)):
-        obj = numpy.asarray(input_array).view(cls)
-        return obj
-
-    @property
-    def x(self):
-        return self[0]
-
-    @property
-    def y(self):
-        return self[1]
-
-    @property
-    def z(self):
-        return self[2]
-
-    def dist(self, other):
-        return numpy.linalg.norm(self - other)
-
-    def length(self):
-        return numpy.linalg.norm(self)
-
-    def norm(self):
-        return self / numpy.linalg.norm(self)
-
-    def random(self, minimum, maximum):
-        self = Vec3(
-            [
-                random.uniform(minimum, maximum),
-                random.uniform(minimum, maximum),
-                random.uniform(minimum, maximum),
-            ]
-        )
-        return self
-
-    def __eq__(self, other):
-        return numpy.array_equal(self, other)
-
-    def __ne__(self, other):
-        return not numpy.array_equal(self, other)
+class Vec3(object):
+    def __init__(self, x=0.0, y=0.0, z=0.0):
+        self.x = x
+        self.y = y
+        self.z = z
 
     def __str__(self):
         return "({}, {}, {})".format(self.x, self.y, self.z)
 
-    def __iter__(self):
-        for x in numpy.nditer(self):
-            yield x.item()
+    def __neg__(self):
+        return Vec3(-self.x, -self.y, -self.z)
+
+    def __add__(self, other):
+
+        if isinstance(other, Vec3):
+            self.x += other.x
+            self.y += other.y
+            self.z += other.z
+        else:
+            self.x += other
+            self.y += other
+            self.z += other
+        return self
+
+    def __sub__(self, other):
+        return self + (-other)
+
+    def __mul__(self, other):
+
+        if isinstance(other, Vec3):
+            self.x *= other.x
+            self.y *= other.y
+            self.z *= other.z
+        else:
+            self.x *= other
+            self.y *= other
+            self.z *= other
+        return self
+
+    def __rmul__(self, other):
+
+        if isinstance(other, Vec3):
+            self.x *= other.x
+            self.y *= other.y
+            self.z *= other.z
+        else:
+            self.x *= other
+            self.y *= other
+            self.z *= other
+        return self
+
+    def __truediv__(self, other):
+
+        if isinstance(other, Vec3):
+            self.x /= other.x
+            self.y /= other.y
+            self.z /= other.z
+        else:
+            self.x /= other
+            self.y /= other
+            self.z /= other
+        return self
+
+    def length_squared(self):
+        x = self.x
+        y = self.y
+        z = self.z
+        return math.pow(x, 2) + math.pow(y, 2) + math.pow(z, 2)
+
+    def length(self):
+        return math.sqrt(self.length_squared())
+
+    def norm(self):
+        return self / self.length()
+
+    def dot(self, other):
+        return dot(self, other)
+
+
+def dot(u, v):
+    return (u.x * v.x) + (u.y * v.y) + (u.z * v.z)
+
+
+def cross(u, v):
+    return Vec3(
+        (u.y * v.z) - (u.z * v.y), (u.z * v.x) - (u.x * v.z), (u.x * v.y) - (u.y * v.x)
+    )
+
+
+def unit_vector(v):
+    return v / v.length()
 
 
 def random_in_unit_sphere():

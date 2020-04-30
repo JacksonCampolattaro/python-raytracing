@@ -17,16 +17,18 @@ def ray_color(ray, world, depth=0):
     if depth <= 0:
         return Color([0.0, 0.0, 0.0])
 
-    hit, rec = world.hit(ray, 0.1, 1000)
+    hit, rec = world.hit(ray, 0.001, 100000)
 
     if hit:
+
+        print("x")
 
         ret, scattered, attenuation = rec.material.scatter(ray, rec)
 
         if ret:
             return attenuation * ray_color(scattered, world, depth - 1)
 
-        return Vec3([0.0, 0.0, 0.0])
+        return Vec3(0.0, 0.0, 0.0)
 
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
@@ -42,19 +44,19 @@ img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
 
 camera = Camera(
-    Vec3([2.0, 2.0, 1.0]),
-    Vec3([0.0, 0.0, -1.0]),
-    Vec3([0.0, 1.0, 0.0]),
+    Vec3(2.0, 2.0, 1.0),
+    Vec3(0.0, 0.0, -1.0),
+    Vec3(0.0, 1.0, 0.0),
     70,
     image_width / image_height,
 )
 
 world = HittableList()
 
-world.objects.append(Sphere([0, 0, -1], 0.5, Lambertian(Vec3([0.7, 0.3, 0.3]))))
-world.objects.append(Sphere([0, -100.5, -1], 100, Lambertian(Vec3([0.8, 0.8, 0.0]))))
-world.objects.append(Sphere([-1.1, 0, -1], 0.5, Metal(Vec3([0.8, 0.8, 0.8]), 0.1)))
-world.objects.append(Sphere([1.1, 0, -1], 0.5, Dialectric(1.5)))
+world.objects.append(Sphere(Vec3(0, 0, -1), 0.5, Lambertian(Vec3(0.7, 0.3, 0.3))))
+world.objects.append(Sphere(Vec3(0, -100.5, -1), 100, Lambertian(Vec3(0.8, 0.8, 0.0))))
+world.objects.append(Sphere(Vec3(1.1, 0, -1), 0.5, Metal(Vec3(0.8, 0.8, 0.8), 0.1)))
+world.objects.append(Sphere(Vec3(1.1, 0, -1), 0.5, Dialectric(1.5)))
 
 
 def sample(j, i):
@@ -83,6 +85,10 @@ def drawPixel(j, i):
 
 def drawRow(j):
 
+    for i in range(image_width - 1):
+        pixels[i, image_height - j - 1] = tuple(drawPixel(j, i))
+
+    """
     with Pool() as pool:
 
         func = partial(drawPixel, j)
@@ -90,6 +96,7 @@ def drawRow(j):
 
         for i in range(image_width - 1):
             pixels[i, image_height - j - 1] = tuple(colors[i])
+    """
 
 
 for j in range(image_height - 1):
