@@ -30,7 +30,8 @@ class Sphere(Hittable):
                 rec = HitRecord()
                 rec.t = temp
                 rec.position = ray.at(rec.t)
-                rec.normal = (rec.position - self.center) / self.radius
+                outwardNormal = (rec.position - self.center) / self.radius
+                rec.setFaceNormal(ray, outwardNormal)
                 return True, rec
 
             temp = (-half_b + root) / a
@@ -38,7 +39,8 @@ class Sphere(Hittable):
                 rec = HitRecord()
                 rec.t = temp
                 rec.position = ray.at(rec.t)
-                rec.normal = (rec.position - self.center) / self.radius
+                outwardNormal = (rec.position - self.center) / self.radius
+                rec.setFaceNormal(ray, outwardNormal)
                 return True, rec
 
         return False, HitRecord()
