@@ -74,3 +74,7 @@ def random_in_hemisphere(normal):
         return in_unit_sphere
     else:
         return -in_unit_sphere
+
+
+def reflect(vector, normal):
+    return vector - 2 * vector.dot(normal) * normal

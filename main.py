@@ -4,7 +4,7 @@ from ray import Ray
 from hittable import Hittable, HittableList
 from sphere import Sphere
 from camera import Camera
-from material import Material
+from material import Material, Lambertian, Metal
 
 from PIL import Image
 import random
@@ -21,10 +21,18 @@ def ray_color(ray, world, depth=0):
     hit, rec = world.hit(ray, 0.1, 1000)
 
     if hit:
-        target = rec.position + random_in_hemisphere(rec.normal)
-        return 0.5 * ray_color(
-            Ray(rec.position, target - rec.position), world, depth - 1
-        )
+
+        ret, scattered, attenuation = rec.material.scatter(ray, rec)
+
+        if ret:
+            return attenuation * ray_color(scattered, world, depth - 1)
+
+        return Vec3([0.0, 0.0, 0.0])
+
+        # target = rec.position + random_in_hemisphere(rec.normal)
+        # return 0.5 * ray_color(
+        # Ray(rec.position, target - rec.position), world, depth - 1
+        # )
 
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
@@ -34,7 +42,7 @@ def ray_color(ray, world, depth=0):
 image_height = 100
 image_width = 200
 samples_per_pixel = 10
-max_depth = 50
+max_depth = 20
 
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
@@ -42,8 +50,10 @@ pixels = img.load()
 camera = Camera()
 
 world = HittableList()
-world.objects.append(Sphere([0, 0, -1], 0.5, Material()))
-world.objects.append(Sphere([0, -100.5, -1], 100, Material()))
+world.objects.append(Sphere([0, 0, -1], 0.5, Lambertian(Vec3([0.7, 0.3, 0.3]))))
+world.objects.append(Sphere([0, -100.5, -1], 100, Lambertian(Vec3([0.8, 0.8, 0.0]))))
+world.objects.append(Sphere([-1.1, 0, -1], 0.5, Metal(Vec3([0.8, 0.8, 0.8]), 0.1)))
+world.objects.append(Sphere([1.1, 0, -1], 0.5, Metal(Vec3([0.2, 0.8, 0.2]), 1.0)))
 
 
 def sample(j, i):
