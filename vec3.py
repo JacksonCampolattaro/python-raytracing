@@ -22,6 +22,9 @@ class Vec3(numpy.ndarray):
     def dist(self, other):
         return numpy.linalg.norm(self - other)
 
+    def length(self):
+        return numpy.linalg.norm(self)
+
     def norm(self):
         return self / numpy.linalg.norm(self)
 

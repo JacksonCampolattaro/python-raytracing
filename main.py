@@ -2,6 +2,8 @@ from PIL import Image
 from vec3 import Vec3
 from color import Color
 from ray import Ray
+from hittable import Hittable
+from sphere import Sphere
 import math
 
 
