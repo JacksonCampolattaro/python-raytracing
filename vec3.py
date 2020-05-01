@@ -10,6 +10,7 @@ def clamp(value, minimum, maximum):
 
 
 # A simple 3d vector class
+# @jitclass(spec)
 class Vec3(object):
     def __init__(self, x=0.0, y=0.0, z=0.0):
         self.x = x
@@ -30,7 +31,11 @@ class Vec3(object):
             return Vec3(self.x + other, self.y + other, self.z + other)
 
     def __sub__(self, other):
-        return self + (-other)
+
+        if isinstance(other, Vec3):
+            return Vec3(self.x - other.x, self.y - other.y, self.z - other.z)
+        else:
+            return Vec3(self.x - other, self.y - other, self.z - other)
 
     def __mul__(self, other):
 
