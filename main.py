@@ -1,5 +1,4 @@
 from vec3 import Vec3
-from color import Color
 from hittable import HittableList
 from sphere import Sphere
 from camera import Camera
@@ -12,7 +11,7 @@ import random
 def ray_color(ray, world, depth=0):
 
     if depth <= 0:
-        return Color([0.0, 0.0, 0.0])
+        return Vec3(0.0, 0.0, 0.0)
 
     hit, rec = world.hit(ray, 0.001, 100000)
 
@@ -27,20 +26,23 @@ def ray_color(ray, world, depth=0):
 
     unit_direction = ray.direction.norm()
     t = 0.5 * (unit_direction.y + 1.0)
-    return ((1.0 - t) * Color([1.0, 1.0, 1.0])) + (t * Color([0.5, 0.7, 1.0]))
+    return ((1.0 - t) * Vec3(1.0, 1.0, 1.0)) + (t * Vec3(0.5, 0.7, 1.0))
 
 
-image_height = 100
-image_width = 200
+image_height = 200
+image_width = 300
 samples_per_pixel = 4
 max_depth = 10
 
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
 
-lookfrom = Vec3(2.0, 2.0, 1.0)
 camera = Camera(
-    lookfrom, Vec3(0.0, 0.0, -1.0), Vec3(0.0, 1.0, 0.0), 70, image_width / image_height,
+    Vec3(0.0, 0.0, 1.0),
+    Vec3(0.0, 0.0, -1.0),
+    Vec3(0.0, 1.0, 0.0),
+    70,
+    image_width / image_height,
 )
 
 world = HittableList()
@@ -48,7 +50,7 @@ world = HittableList()
 world.objects.append(Sphere(Vec3(0, 0, -1), 0.5, Lambertian(Vec3(0.7, 0.3, 0.3))))
 world.objects.append(Sphere(Vec3(0, -100.5, -1), 100, Lambertian(Vec3(0.8, 0.8, 0.0))))
 world.objects.append(Sphere(Vec3(1.1, 0, -1), 0.5, Metal(Vec3(0.8, 0.8, 0.8), 0.1)))
-world.objects.append(Sphere(Vec3(1.1, 0, -1), 0.5, Dialectric(1.5)))
+world.objects.append(Sphere(Vec3(-1.1, 0, -1), 0.5, Dialectric(1.5)))
 
 
 def sample(j, i):
@@ -63,7 +65,7 @@ def sample(j, i):
 
 def drawPixel(j, i):
 
-    color = Color([0.0, 0.0, 0.0])
+    color = Vec3(0.0, 0.0, 0.0)
 
     # with Pool() as pool:
     for _ in range(samples_per_pixel):

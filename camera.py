@@ -11,13 +11,9 @@ class Camera(object):
         half_height = math.tan(theta / 2.0)
         half_width = aspect * half_height
 
-        print(lookfrom)
-
         w = (lookfrom - lookat).norm()
         u = cross(vup, w).norm()
         v = cross(w, u)
-
-        print(lookfrom)
 
         self.origin = lookfrom
         self.lower_left_corner = self.origin - (u * half_width) - (v * half_height) - w

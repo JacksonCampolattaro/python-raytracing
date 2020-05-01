@@ -1,5 +1,5 @@
 from hittable import HitRecord
-from vec3 import Vec3, random_unit_vector, random_in_unit_sphere, reflect, refract
+from vec3 import *
 from ray import Ray
 import random
 import math
@@ -42,7 +42,7 @@ class Dialectric(Material):
         self.refractive_index = refractive_index
 
     def scatter(self, ray_in, rec):
-        attenuation = Vec3([1.0, 1.0, 1.0])
+        attenuation = Vec3(1.0, 1.0, 1.0)
         if rec.frontFacing:
             etai_over_etat = 1 / self.refractive_index
         else:
@@ -50,7 +50,7 @@ class Dialectric(Material):
 
         unit_direction = ray_in.direction.norm()
 
-        cos_theta = min(rec.normal.dot(-unit_direction), 1.0)
+        cos_theta = min(dot(rec.normal, -unit_direction), 1.0)
         sin_theta = math.sqrt(1.0 - cos_theta * cos_theta)
 
         if etai_over_etat * sin_theta > 1.0:
@@ -69,7 +69,6 @@ class Dialectric(Material):
         return True, scattered, attenuation
 
 
-@jit
 def schlick(cosine, refractive_index):
     r0 = (1 - refractive_index) / (1 + refractive_index)
     r0 = r0 * r0

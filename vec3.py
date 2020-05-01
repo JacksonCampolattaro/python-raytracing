@@ -3,6 +3,12 @@ import random
 import math
 
 
+def clamp(value, minimum, maximum):
+    result = value if value > minimum else minimum
+    result = result if value < maximum else maximum
+    return result
+
+
 # A simple 3d vector class
 class Vec3(object):
     def __init__(self, x=0.0, y=0.0, z=0.0):
@@ -62,6 +68,11 @@ class Vec3(object):
     def dot(self, other):
         return dot(self, other)
 
+    def __iter__(self):
+        yield int(255 * clamp(math.sqrt(self.x), 0, 0.999))
+        yield int(255 * clamp(math.sqrt(self.y), 0, 0.999))
+        yield int(255 * clamp(math.sqrt(self.z), 0, 0.999))
+
 
 def dot(u, v):
     return (u.x * v.x) + (u.y * v.y) + (u.z * v.z)
@@ -77,9 +88,17 @@ def unit_vector(v):
     return v / v.length()
 
 
+def random_vector(minimum, maximum):
+    return Vec3(
+        random.uniform(minimum, maximum),
+        random.uniform(minimum, maximum),
+        random.uniform(minimum, maximum),
+    )
+
+
 def random_in_unit_sphere():
     while True:
-        p = Vec3().random(-1.0, 1.0)
+        p = random_vector(-1.0, 1.0)
         if p.length() <= 1:
             return p
 
@@ -100,12 +119,12 @@ def random_in_hemisphere(normal):
 
 
 def reflect(vector, normal):
-    return vector - 2 * vector.dot(normal) * normal
+    return vector - normal * 2 * dot(normal, vector)
 
 
 def refract(vector, normal, etai_over_etat):
-    cos_theta = normal.dot(-vector)
-    r_out_parallel = etai_over_etat * (vector + cos_theta * normal)
+    cos_theta = dot(normal, -vector)
+    r_out_parallel = (vector + (normal * cos_theta)) * etai_over_etat
     r_out_perpendicular = (
         -math.sqrt(1.0 - r_out_parallel.length() * r_out_parallel.length()) * normal
     )
