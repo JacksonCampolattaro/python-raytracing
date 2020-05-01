@@ -19,14 +19,9 @@ class Vec3(object):
     def __add__(self, other):
 
         if isinstance(other, Vec3):
-            self.x += other.x
-            self.y += other.y
-            self.z += other.z
+            return Vec3(self.x + other.x, self.y + other.y, self.z + other.z)
         else:
-            self.x += other
-            self.y += other
-            self.z += other
-        return self
+            return Vec3(self.x + other, self.y + other, self.z + other)
 
     def __sub__(self, other):
         return self + (-other)
@@ -34,38 +29,23 @@ class Vec3(object):
     def __mul__(self, other):
 
         if isinstance(other, Vec3):
-            self.x *= other.x
-            self.y *= other.y
-            self.z *= other.z
+            return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
         else:
-            self.x *= other
-            self.y *= other
-            self.z *= other
-        return self
+            return Vec3(self.x * other, self.y * other, self.z * other)
 
     def __rmul__(self, other):
 
         if isinstance(other, Vec3):
-            self.x *= other.x
-            self.y *= other.y
-            self.z *= other.z
+            return Vec3(self.x * other.x, self.y * other.y, self.z * other.z)
         else:
-            self.x *= other
-            self.y *= other
-            self.z *= other
-        return self
+            return Vec3(self.x * other, self.y * other, self.z * other)
 
     def __truediv__(self, other):
 
         if isinstance(other, Vec3):
-            self.x /= other.x
-            self.y /= other.y
-            self.z /= other.z
+            return Vec3(self.x / other.x, self.y / other.y, self.z / other.z)
         else:
-            self.x /= other
-            self.y /= other
-            self.z /= other
-        return self
+            return Vec3(self.x / other, self.y / other, self.z / other)
 
     def length_squared(self):
         x = self.x
@@ -108,7 +88,7 @@ def random_unit_vector():
     a = random.uniform(0, 2 * math.pi)
     z = random.uniform(-1.0, 1.0)
     r = math.sqrt(1 - z * z)
-    return Vec3([r * math.cos(a), r * math.sin(a), z])
+    return Vec3(r * math.cos(a), r * math.sin(a), z)
 
 
 def random_in_hemisphere(normal):

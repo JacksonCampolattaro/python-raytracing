@@ -18,7 +18,7 @@ class Lambertian(Material):
 
     def scatter(self, ray_in, rec):
 
-        scatter_direction = rec.normal + random_unit_vector()
+        scatter_direction = random_unit_vector() + rec.normal
         scattered = Ray(rec.position, scatter_direction)
         attenuation = self.albedo
         return True, scattered, attenuation

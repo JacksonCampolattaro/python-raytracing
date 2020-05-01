@@ -8,23 +8,13 @@ def clamp(value, minimum, maximum):
     return result
 
 
-class Color(numpy.ndarray):
-    def __new__(cls, input_array=(0.0, 0.0, 0.0)):
-        obj = numpy.asarray(input_array).view(cls)
-        return obj
-
-    @property
-    def r(self):
-        return self[0]
-
-    @property
-    def g(self):
-        return self[1]
-
-    @property
-    def b(self):
-        return self[2]
+class Color(object):
+    def __init__(self, r, g, b):
+        self.r = r
+        self.g = g
+        self.b = b
 
     def __iter__(self):
-        for x in numpy.nditer(self):
-            yield int(255 * clamp(math.sqrt(x.item()), 0, 0.999))
+        yield int(255 * clamp(math.sqrt(self.r), 0, 0.999))
+        yield int(255 * clamp(math.sqrt(self.g), 0, 0.999))
+        yield int(255 * clamp(math.sqrt(self.b), 0, 0.999))

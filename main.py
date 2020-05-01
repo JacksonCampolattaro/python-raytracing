@@ -8,9 +8,6 @@ from material import Lambertian, Metal, Dialectric
 from PIL import Image
 import random
 
-from functools import partial
-from multiprocessing import Pool
-
 
 def ray_color(ray, world, depth=0):
 
@@ -20,8 +17,6 @@ def ray_color(ray, world, depth=0):
     hit, rec = world.hit(ray, 0.001, 100000)
 
     if hit:
-
-        print("x")
 
         ret, scattered, attenuation = rec.material.scatter(ray, rec)
 
@@ -43,12 +38,9 @@ max_depth = 10
 img = Image.new("RGB", (image_width, image_height), "black")
 pixels = img.load()
 
+lookfrom = Vec3(2.0, 2.0, 1.0)
 camera = Camera(
-    Vec3(2.0, 2.0, 1.0),
-    Vec3(0.0, 0.0, -1.0),
-    Vec3(0.0, 1.0, 0.0),
-    70,
-    image_width / image_height,
+    lookfrom, Vec3(0.0, 0.0, -1.0), Vec3(0.0, 1.0, 0.0), 70, image_width / image_height,
 )
 
 world = HittableList()
