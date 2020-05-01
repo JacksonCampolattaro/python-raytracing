@@ -2,7 +2,7 @@
 #### *Jackson Campolattaro*
 A simple raytracing program written in python.
 
-*Image Goes Here*
+![A small scene](https://raw.githubusercontent.com/JacksonCampolattaro/python-raytracing/master/images/2020-05-01%2015%3A49%3A34.404471.jpg?token=AKIHG2WIA6RWAJ4EYKQLR6K6WW47C)
 
 ## Project Description
 
