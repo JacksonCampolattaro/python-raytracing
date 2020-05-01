@@ -12,6 +12,16 @@ A simple raytracing program written in python.
 
 *Link Goes Here*
 
+### Structure
+
+#### Vectors
+
+#### Rays
+
+#### Hittables
+
+#### Camera
+
 ## Differences from Book
 
 ### Python

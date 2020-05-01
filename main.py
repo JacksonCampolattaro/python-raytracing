@@ -8,12 +8,14 @@ from render import ray_color, sample, pixel
 from PIL import Image
 from functools import partial
 import random
+import datetime
+import time
 import multiprocessing
 
 
-image_height = 400
-image_width = 500
-samples_per_pixel = 20
+image_height = 1000
+image_width = 150
+samples_per_pixel = 15
 max_depth = 4
 
 img = Image.new("RGB", (image_width, image_height), "black")
@@ -32,7 +34,8 @@ world = HittableList()
 
 world.objects.append(Sphere(Vec3(0, -100, -1), 100, Lambertian(Vec3(0.4, 0.4, 0.4))))
 world.objects.append(Sphere(Vec3(0, 0.8, -1), 0.8, Lambertian(Vec3(0.7, 0.3, 0.2))))
-world.objects.append(Sphere(Vec3(1, 1, -3), 1, Metal(Vec3(0.8, 0.8, 0.8), 0.1)))
+# world.objects.append(Sphere(Vec3(0, 1.85, -1), 0.25, Metal(Vec3(0.4, 0.4, 0.4), 0.0)))
+world.objects.append(Sphere(Vec3(0, 1, -3), 1, Metal(Vec3(0.8, 0.8, 0.8), 0.1)))
 world.objects.append(Sphere(Vec3(0.5, 0.5, 0.4), 0.5, Dialectric(1.5)))
 
 pool = multiprocessing.Pool()
@@ -51,3 +54,4 @@ for j in range(image_height - 1):
     print("{} / {}".format(j + 1, image_height), end="\r")
 
 img.show()
+img.save("images/{}.jpg".format(datetime.datetime.today()), "JPEG")
