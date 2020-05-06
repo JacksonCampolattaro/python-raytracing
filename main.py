@@ -3,13 +3,11 @@ from hittable import HittableList
 from sphere import Sphere
 from camera import Camera
 from material import Lambertian, Metal, Dialectric
-from render import ray_color, sample, pixel
+from render import pixel
 
 from PIL import Image
 from functools import partial
-import random
 import datetime
-import time
 import multiprocessing
 
 

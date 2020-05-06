@@ -6,35 +6,27 @@ A simple raytracing program written in python.
 
 ## Project Description
 
-### Inspiration
+I put together a minimal raytracing engine.
+It's based on a book I highly recommend to anyone interested in the topic.
+
 
 *Image Goes Here*
 
 *Link Goes Here*
 
-### Structure
+I needed to adapt the example code from C++ to Python.
+This was a great crash course in the language,
+because the book used a number of relatively advanced techniques.
+It was interesting to see what became easier in Python, 
+and what became harder.
+Performance quickly became a limiting factor,
+and I needed to introduce multithreading just to get reasonable performance.
 
-#### Vectors
+## Usage
 
-#### Rays
+The scene is configured by editing the main program.
 
-#### Hittables
-
-#### Camera
-
-## Differences from Book
-
-### Python
-
-### Multithreading
-
-## Examples of Renders
-
-*Image Goes Here*
-
-*Image Goes Here*
-
-*Image Goes Here*
-
-*Image Goes Here*
-
+When running, the program displays its progress. 
+Pixels are done using a pool of threads, 
+but each row is done in sequence.
+The progress indicator tells how many rows have been completed.
