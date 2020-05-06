@@ -1,7 +1,6 @@
 from vec3 import Vec3, cross
 from ray import Ray
 import math
-import numpy
 
 
 class Camera(object):

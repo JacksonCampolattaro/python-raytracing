@@ -1,10 +1,8 @@
 from hittable import HitRecord
-from vec3 import *
+from vec3 import Vec3, random_in_unit_sphere, random_unit_vector, dot, refract, reflect
 from ray import Ray
 import random
 import math
-
-from numba import jit
 
 
 class Material(object):
