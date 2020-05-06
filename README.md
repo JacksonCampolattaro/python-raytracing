@@ -10,7 +10,7 @@ I put together a minimal raytracing engine.
 It's based on [this fantastic book](https://raytracing.github.io/books/RayTracingInOneWeekend.html),
 I highly recommend it to anyone interested in the topic.
 
-![Raytracing in one weekend series](https://raytracing.github.io/images/RTOneWeekend.jpg)
+[![Raytracing in one weekend series](https://raytracing.github.io/images/RTOneWeekend.jpg)](https://raytracing.github.io/)
 
 *Link Goes Here*
 
