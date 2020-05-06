@@ -7,10 +7,10 @@ A simple raytracing program written in python.
 ## Project Description
 
 I put together a minimal raytracing engine.
-It's based on a book I highly recommend to anyone interested in the topic.
+It's based on [this fantastic book](https://raytracing.github.io/books/RayTracingInOneWeekend.html),
+I highly recommend it to anyone interested in the topic.
 
-
-*Image Goes Here*
+![Raytracing in one weekend series](https://raytracing.github.io/images/RTOneWeekend.jpg)
 
 *Link Goes Here*
 
