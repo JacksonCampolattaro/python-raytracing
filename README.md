@@ -42,8 +42,10 @@ or lower the resolution to 100x200 for a near instant render.
 
 ### Running
 
-Make sure all dependencies are installed, there aren't many, 
-but if there are any missing, the runtime should let you know what you need anyway.
+Make sure all dependencies are installed.
+My copy of Fedora came with all the libraries I needed, 
+but if there are any missing on your computer, 
+the runtime should let you know what you need anyway.
 
 The program can be run via
 ```
