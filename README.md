@@ -25,15 +25,19 @@ just to be able to run tests in a reasonable amount of time.
 
 ### Configuring the Scene
 
-The scene is configured by editing the main program.
+The scene is configured by editing `main.py`.
 Main has a number of comments explaining what variables are responsible for.
+I encourage playing around with the scene to see if you can create something interesting, if you have time!
+I had a lot of fun exploring the effects I could get with the reflective and refractive materials.
 
 Right now, main is configured to produce the image seen at the top of the README.
 It took about half an hour to render, 
 if you'd like to render a lower quality version faster, 
 just to make sure everything works,
-try lowering numbers like 
+try reducing numbers like 
 `samples_per_pixel`, `max_depth`, or the image dimensions.
+For example, set `samples_per_pixel = 5` for a fast but noisy preview,
+or lower the resolution to 100x200 for a near instant render.
 
 
 ### Running
@@ -54,3 +58,5 @@ When running, the program displays its progress.
 Pixels are done using a pool of threads, 
 but each row is done in sequence.
 The progress indicator tells how many rows have been completed.
+When the program finishes, it will display the image in a window
+and save a jpeg to the `images` directory (named after the time it was created).
