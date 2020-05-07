@@ -47,12 +47,13 @@ but if there are any missing, the runtime should let you know what you need anyw
 
 The program can be run via
 ```
-python3 main.py
+python3.7 main.py
 ```
 or even more simply
 ```
 make
 ```
+Note: *my Makefile invokes [Black](https://github.com/psf/black) (a strict PEP-8 linter) each time it's run, if you don't want the formatting of your edits to main.py to change, or if you don't want to install black, you can instead do `make run`.*
 
 When running, the program displays its progress. 
 Pixels are done using a pool of threads, 
